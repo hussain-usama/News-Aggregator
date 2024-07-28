@@ -5,8 +5,8 @@ import CategoryList from '../../../components/categories/CategoryList';
 import { formatDate } from '../../../utils/globalFunctions';
 import HorizontalCards from '../../../components/cards/HorizontalCards';
 import Loader from '../../../components/Loader/Loader';
-import Form from 'react-bootstrap/Form';
 import '../styles/NewsFeedStyles.css';
+import { NEWSORG_KEY } from '../../../config/connectionStrings';
 
 function NewsFeed() {
     const [selectedCategories, setselectedCategories] = useState(['All Categories'])
@@ -19,7 +19,7 @@ function NewsFeed() {
     /* fetch api response */
     const callFeedServices = async () => {
         setLoading(true)
-        const getAllResponses = await Promise.allSettled([getFeeds('https://newsapi.org/v2/everything?q=all&from=2024-07-27&sortBy=popularity&apiKey=8e8246ddf97848a8aa6eb46310d5460d'), getFeeds('https://content.guardianapis.com/search?api-key=93df426a-a729-45ee-bced-5c0181efe250')])
+        const getAllResponses = await Promise.allSettled([getFeeds(`https://newsapi.org/v2/everything?q=all&from=2024-07-27&sortBy=popularity&apiKey=${NEWSORG_KEY}`), getFeeds(`https://content.guardianapis.com/search?api-key=${GUARDIAN_KEY}`)])
         let gatherResponse = [];
         if (getAllResponses.every(x => x.status === "fulfilled")) {
             getAllResponses.forEach(response => {
@@ -29,7 +29,7 @@ function NewsFeed() {
                     }
                     else if (response?.value?.results?.length) {
                         const formatResponse= response?.value?.results.map(item=>{
-                            return {...item ,title:item.pillarName, title:item.pillarName, publishedAt:item.webPublicationDate, description:item.webTitle, url:item.webUrl }
+                            return {...item ,title:item.pillarName, publishedAt:item.webPublicationDate, description:item.webTitle, url:item.webUrl }
                         })
                         gatherResponse = [...gatherResponse, ...formatResponse]
                     }
@@ -67,7 +67,7 @@ function NewsFeed() {
         let specificFeed=[]
         setLoading(true)
         if(updatedCategories.includes('All Categories')){
-            specificFeed = await getFeeds('https://newsapi.org/v2/everything?q=all&from=2024-07-27&sortBy=popularity&apiKey=8e8246ddf97848a8aa6eb46310d5460d')
+            specificFeed = await getFeeds(`https://newsapi.org/v2/everything?q=all&from=2024-07-27&sortBy=popularity&apiKey=${NEWSORG_KEY}`)
         }else{
             specificFeed = await fetchAllCategoriesData(updatedCategories)
         }
@@ -77,7 +77,7 @@ function NewsFeed() {
 
     const fetchAllCategoriesData = async (updatedCategories) => {
         try {
-            const promises = updatedCategories.map(query=>getFeeds(`https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&from=2024-07-27&sortBy=popularity&pageSize=25&apiKey=8e8246ddf97848a8aa6eb46310d5460d`));
+            const promises = updatedCategories.map(query=>getFeeds(`https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&from=2024-07-27&sortBy=popularity&pageSize=25&apiKey=${NEWSORG_KEY}`));
             const results = await Promise.all(promises);
             return {articles: results.map(res=>res.articles || [])}
         } catch (error) {
@@ -102,7 +102,7 @@ function NewsFeed() {
             <div className='row py-4'>
                 <div className='col-md-6'>
                     <div className="card-main mt-2" onClick={()=>window.open(allFeeds[0]?.url,'_blank')}>
-                        <img src={allFeeds[0]?.urlToImage || 'https://placehold.co/300x200.png?text=🍩'} className="card-main-image" />
+                        <img src={allFeeds[0]?.urlToImage || 'https://placehold.co/300x200.png?text=🍩'} alt='news-img' className="card-main-image" />
                         <div className="card-gradient"></div>
                         <div className="card-content">
                             <h2 className="shadow-card-title">{allFeeds[0]?.title}</h2>

@@ -1,6 +1,6 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import '../styles/cardStyle.css'
+import '../styles/cardStyle.css';
+
 import { formatDate } from '../../utils/globalFunctions';
 function VerticalCards({ cardContent }) {
     return (
