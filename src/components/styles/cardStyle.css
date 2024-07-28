@@ -1,0 +1,18 @@
+.vertical-card-images{
+    width: 250px;
+    height: 150px;
+    margin-right: 5px;
+}
+.vertical-desc{
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.horizontal-card-images{
+    width: 100%;
+    height: 200px;
+    margin-right: 5px;
+}

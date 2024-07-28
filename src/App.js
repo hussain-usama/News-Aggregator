@@ -1,23 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import NewsFeed from './views/components/NewsFeed/NewsFeed';
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='p-4'>
+          <div className='d-flex align-items-center justify-content-center'>
+            <h1 className='main-heading'>NEWS <br/>AGGREGATOR</h1>
+          </div>
+          <NewsFeed/>
+      </div>
     </div>
   );
 }

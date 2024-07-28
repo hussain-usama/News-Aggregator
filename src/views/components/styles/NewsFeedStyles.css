@@ -1,0 +1,45 @@
+
+/* Card Styles */
+.card-main {
+    position: relative;
+    background-color: #292524;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+  }
+  
+  .card-main-image {
+    width: 100%;
+    height: 39rem; 
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .card-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1)); 
+  }
+  
+  .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem; 
+  }
+  
+  .shadow-card-title {
+    color: #ffffff; 
+    font-size: 1.125rem; 
+    font-weight: bold; 
+  }
+  
+  .shadow-card-text {
+    color: #d4d4d4; 
+  }
+  
+  .dark .card-main {
+    background-color: #18181b;
+  }
+  
