@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import VerticalCards from '../../../components/cards/VerticalCards';
 import { categotriesList, getFeeds } from './feedServices';
 import CategoryList from '../../../components/categories/CategoryList';
-import { formatDate } from '../../../utils/globalFunctions';
+import { formatDate, shuffleArray } from '../../../utils/globalFunctions';
 import HorizontalCards from '../../../components/cards/HorizontalCards';
 import Loader from '../../../components/Loader/Loader';
 import '../styles/NewsFeedStyles.css';
-import { NEWSORG_KEY } from '../../../config/connectionStrings';
+import { GUARDIAN_KEY, NEWSORG_KEY } from '../../../config/connectionStrings';
 
 function NewsFeed() {
     const [selectedCategories, setselectedCategories] = useState(['All Categories'])
@@ -68,11 +68,14 @@ function NewsFeed() {
         setLoading(true)
         if(updatedCategories.includes('All Categories')){
             specificFeed = await getFeeds(`https://newsapi.org/v2/everything?q=all&from=2024-07-27&sortBy=popularity&apiKey=${NEWSORG_KEY}`)
+            setAllFeeds([...specificFeed?.articles]);
+        
         }else{
             specificFeed = await fetchAllCategoriesData(updatedCategories)
+            setAllFeeds(shuffleArray(specificFeed.articles?.flat()));
+            console.log(specificFeed,'specificFeed')
         }
         setLoading(false)
-        setAllFeeds([...specificFeed?.articles]);
     }
 
     const fetchAllCategoriesData = async (updatedCategories) => {
@@ -90,7 +93,7 @@ function NewsFeed() {
         <div className=''>
             {loading ? <Loader show={loading} /> : null}
             <div className='row'>
-                <div className='col-md-6'>
+                <div className='col-md-12 category-list-main'>
                     <CategoryList
                         selectedCategories={selectedCategories}
                         categotriesList={categotriesList}
